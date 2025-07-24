@@ -288,7 +288,7 @@ duration:          { type: Number, required: true }
     - Receive AI-based help.
     - Access future features like **video streaming** for solutions.
 
-  <img src="images/hld.png" alt="HLD" width="100%" />
+  <img src="images/HLD.png" alt="HLD" width="100%" />
 
 
 
