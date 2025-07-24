@@ -449,6 +449,8 @@ Admin can create a problem by filling details of 'title', 'description', 'diffic
 
 <img src="images/admin_create.png" alt="Admin Create Page" width="65%" />
 
+---
+
 Admin can update a particular problem.
 
 <img src="images/admin_update_1.png" alt="Admin Update Page" width="65%" />
