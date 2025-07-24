@@ -427,7 +427,7 @@ Submissions section:
 
 ---
 
-AI Chatbot section:
+AI Chatbot section (the bold text and code are formatted using ReactMarkDown):
 
 <p align="center">
 <img src="images/user_problem_ai_dark.png" alt="Problem Page" width="45%" />
@@ -442,3 +442,4 @@ After submitting the code:
 
 ---
 
+THIS WRAPS UP IT ALL. I am curently working on adding video feature via cloudinary using streaming method
