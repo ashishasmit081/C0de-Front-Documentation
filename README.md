@@ -109,8 +109,6 @@ Install the following packages to set up the backend server.
 npm install express mongoose cookie-parser dotenv jsonwebtoken validator redis axios bcrypt cors
 ```
 
----
-
 ## 💻 Frontend Dependencies
 
 Install these packages to set up the frontend using React and Tailwind CSS.
@@ -127,7 +125,6 @@ npm install react redux tailwindcss daisyui vite react-hook-form zod @hookform/r
 
 This  outlines the MongoDB (Mongoose) schema definitions used in the **C0de Front** application.
 
----
 
 ## 🧑 User Schema
 
@@ -156,7 +153,6 @@ userSchema.post('findOneAndDelete', async function (userInfo) {
 });
 ```
 
----
 
 ## 📤 Submission Schema
 
@@ -179,12 +175,11 @@ testCasesTotal:   { type: Number, default: 0 }
 { timestamps: true }
 ```
 
-### Indexing
+### Compound Indexing
 ```js
 submissionSchema.index({ userId: 1, problemId: 1 });
 ```
 
----
 
 ## 📚 Problem Schema
 
@@ -218,8 +213,6 @@ problemCreator:    { type: Schema.Types.ObjectId, ref: 'user', required: true }
 ```js
 { timestamps: true }
 ```
-
----
 
 ## 🎥 VideoSolution Schema
 
@@ -290,8 +283,7 @@ duration:          { type: Number, required: true }
 
   <img src="images/HLD.png" alt="HLD" width="100%" />
 
-
-
+---
 
 # 7. Backend Flow
 ### Working of Authorization
@@ -425,6 +417,9 @@ sequenceDiagram
     Handler ->> Client: Return response (DSA solution)
     Client ->> User: Display response
 ```
+
+---
+
 # 8. FrontEnd
 
 As someone opens the site he/she is redirected to signup page, if not authorized. The user can choose to either signup or login.
