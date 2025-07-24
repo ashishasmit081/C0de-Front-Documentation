@@ -1,6 +1,20 @@
 # 🚀 C0de Front
 
-## 🧠 Introduction
+## 📚 Table of Contents
+
+1. [Introduction](#1-introduction)
+2. [Problem Statement](#2-problem-statement)
+3. [Features](#3-features)
+4. [Requirements & Setup](#4-requirements--setup)
+5. [Mongoose Schema Definitions for C0de Front](#5-mongoose-schema-definitions-for-c0de-front)
+6. [High Level Architecture](#6-high-level-architecture)
+7. [Backend Flow](#7-backend-flow)
+8. [FrontEnd](#8-frontend)
+
+---
+
+
+# 1. Introduction
 
 **C0de Front** is a LeetCode-style coding platform developed to help users practice DSA problems with a robust full-stack experience. It features:
 
@@ -12,7 +26,7 @@
 
 ---
 
-## 🧩 Problem Statement
+# 2. Problem Statement
 
 The goal was to build a coding platform similar to LeetCode where users can:
 
@@ -31,7 +45,56 @@ The goal was to build a coding platform similar to LeetCode where users can:
 
 ---
 
-## ⚙️ Requirements & Setup
+---
+# 3. Features
+
+### 🔐 Authentication & Authorization
+- Secure **user authentication** using **JWT** tokens and **bcrypt** password hashing.
+- **Role-based access control** (`admin`, `user`) implemented via custom middleware.
+- **Token blacklisting** using **Redis** ensures secure logout and session handling.
+
+### 👤 User Functionality
+- **Signup/Login** system with JWT authentication.
+- Users can:
+  - **View all coding problems** or filter only their **solved problems**.
+  - **Run** or **Submit** code for any problem in **Java, C++, or JavaScript**.
+  - **Delete their profile**, which also removes all related submissions.
+
+### 🧑‍💼 Admin Functionality
+- Full problem management capabilities:
+  - **Create**, **update**, and **delete** coding problems.
+  - Add **problem metadata**: title, description, difficulty level (`easy`, `medium`, `hard`), and topic tags (`array`, `graph`, etc.).
+  - Add both **visible and hidden test cases**.
+  - Provide **boilerplate code** and **reference solutions** for each supported language.
+
+### 🧪 Code Execution & Evaluation
+- **Judge0 API integration** to compile and run user code.
+- **Run mode**: Executes code without saving submission.
+- **Submit mode**: Executes code against all test cases and saves the result in the database.
+- All user code input is **sanitized** to avoid execution errors.
+
+### 🧠 AI-Powered Chatbot (via Gemini API)
+- Integrated an **AI assistant** to help users with **DSA-related doubts**.
+- Enhancements for contextual and safe interactions:
+  - **Max output token limit** of 500 to manage resource usage.
+  - **System Instructions** restrict responses strictly to coding/problem-solving topics.
+  - Automatically passes the **current problem’s title, description, test cases, and boilerplate** as context.
+  - Enables users to ask vague queries like _“help me with this problem”_ and receive accurate, relevant help.
+
+### 🗃️ Database Design
+- **Three core Mongoose schemas**:
+  - `User`: Includes role, problem history, and secure fields.
+  - `Problem`: Fully structured problem model with test cases, tags, and more.
+  - `Submission`: Stores every code submission, its result, runtime, and metadata.
+- **Compound indexing** on `(userId, problemId)` in the `Submission` schema for efficient querying.
+
+### 🔮 Future Enhancements
+- **Video solution support** via **video streaming integration** is planned in the next phase.
+  
+---
+
+
+# 4. Requirements & Setup
 
 Make sure you have **Node.js**, **npm**, and **MongoDB** installed.
 
@@ -59,7 +122,8 @@ npm install react redux tailwindcss daisyui vite react-hook-form zod @hookform/r
 
 ---
 
-# 📘 Mongoose Schema Definitions for C0de Front
+
+# 5. Mongoose Schema Definitions for C0de Front
 
 This  outlines the MongoDB (Mongoose) schema definitions used in the **C0de Front** application.
 
@@ -173,54 +237,103 @@ duration:          { type: Number, required: true }
 ```js
 { timestamps: true }
 ```
----
-## 🚀 Features
 
-### 🔐 Authentication & Authorization
-- Secure **user authentication** using **JWT** tokens and **bcrypt** password hashing.
-- **Role-based access control** (`admin`, `user`) implemented via custom middleware.
-- **Token blacklisting** using **Redis** ensures secure logout and session handling.
-
-### 👤 User Functionality
-- **Signup/Login** system with JWT authentication.
-- Users can:
-  - **View all coding problems** or filter only their **solved problems**.
-  - **Run** or **Submit** code for any problem in **Java, C++, or JavaScript**.
-  - **Delete their profile**, which also removes all related submissions.
-
-### 🧑‍💼 Admin Functionality
-- Full problem management capabilities:
-  - **Create**, **update**, and **delete** coding problems.
-  - Add **problem metadata**: title, description, difficulty level (`easy`, `medium`, `hard`), and topic tags (`array`, `graph`, etc.).
-  - Add both **visible and hidden test cases**.
-  - Provide **boilerplate code** and **reference solutions** for each supported language.
-
-### 🧪 Code Execution & Evaluation
-- **Judge0 API integration** to compile and run user code.
-- **Run mode**: Executes code without saving submission.
-- **Submit mode**: Executes code against all test cases and saves the result in the database.
-- All user code input is **sanitized** to avoid execution errors.
-
-### 🧠 AI-Powered Chatbot (via Gemini API)
-- Integrated an **AI assistant** to help users with **DSA-related doubts**.
-- Enhancements for contextual and safe interactions:
-  - **Max output token limit** of 500 to manage resource usage.
-  - **System Instructions** restrict responses strictly to coding/problem-solving topics.
-  - Automatically passes the **current problem’s title, description, test cases, and boilerplate** as context.
-  - Enables users to ask vague queries like _“help me with this problem”_ and receive accurate, relevant help.
-
-### 🗃️ Database Design
-- **Three core Mongoose schemas**:
-  - `User`: Includes role, problem history, and secure fields.
-  - `Problem`: Fully structured problem model with test cases, tags, and more.
-  - `Submission`: Stores every code submission, its result, runtime, and metadata.
-- **Compound indexing** on `(userId, problemId)` in the `Submission` schema for efficient querying.
-
-### 🔮 Future Enhancements
-- **Video solution support** via **video streaming integration** is planned in the next phase.
 ---
 
-## 🧩 Backend Flow
+# 6. High Level Architecture
+
+##  Overview
+
+- **Full-Stack Platform**:  
+  C0de Front is designed as a full-stack coding platform focused on DSA (Data Structures and Algorithms) practice.
+
+- **Frontend (React)**:
+  - Built using **React** with **Monaco Editor** for code input.
+  - **Redux** is used for global state management.
+  - UI styled using **Tailwind CSS** and **DaisyUI**.
+  - Communicates with the backend through **HTTP/REST APIs**.
+
+- **Backend (Node.js/Express)**:
+  - Handles all business logic, route handling, and integration with third-party services.
+  - Protected with **JWT-based authentication middleware** and **rate limiters**.
+
+- **Database (MongoDB)**:
+  - Stores data using four core schemas:
+    - `User`
+    - `Problem`
+    - `Submission`
+    - `VideoSolution` *(upcoming)*
+  - Efficient querying via **indexing** (e.g., compound index on `userId` + `problemId`).
+
+- **Third-Party Integrations**:
+  - 🧠 **Gemini API**: Provides AI chatbot support for DSA-related queries.
+  - 🧪 **Judge0 API**: Compiles and executes submitted code against visible and hidden test cases.
+  - 📹 **Cloudinary** *(in progress)*: Will store video solutions submitted by users.
+
+- **Security & Middleware**:
+  - **JWT authentication** ensures protected routes.
+  - **Rate limiting** helps prevent abuse (especially for code submission).
+
+- **Deployment**:
+  - Currently running **locally**:
+    - Backend on a local Node.js server.
+    - Frontend hosting planned (e.g., **Netlify**, **Vercel**, etc.).
+  - Assumes a **stable internet connection** for external API calls.
+  - Not yet optimized for high traffic (acknowledged area of growth).
+
+- **Vision**:
+  - Provide users with the ability to:
+    - Practice coding problems.
+    - Track their progress.
+    - Receive AI-based help.
+    - Access future features like **video streaming** for solutions.
+
+
+```mermaid
+flowchart LR
+  subgraph Frontend
+    FE[React Frontend]
+  end
+
+  subgraph Backend
+    BE[Node.js/Express Backend]
+  end
+
+  subgraph Services
+    DB[MongoDB]
+    J0[Judge0 API]
+    GEM[Gemini API]
+    CL[Cloudinary]
+  end
+
+  %% Relationships
+  FE -->|HTTP/REST Requests| BE
+  BE -->|Data Storage/Retrieval| DB
+  BE -->|Code Execution| J0
+  BE -->|AI Chat Responses| GEM
+  BE -->|Video Uploads (Future)| CL
+
+  %% Notes
+  click FE callback "Includes Monaco Editor, Redux state,\nand responsive UI with Tailwind CSS"
+  click BE callback "Handles routes, middleware (JWT, rate limiting),\nand API integrations"
+  click DB callback "Stores User, Problem, Submission,\nand VideoSolution schemas"
+  click J0 callback "Compiles and runs code with test cases"
+  click GEM callback "Provides DSA-specific chatbot support"
+  click CL callback "Future storage for video solutions"
+
+  %% Styling
+  style FE fill:#ADD8E6,stroke:#333,stroke-width:1px
+  style BE fill:#90EE90,stroke:#333,stroke-width:1px
+  style DB fill:#FFFFE0,stroke:#333,stroke-width:1px
+  style J0 fill:#FFD580,stroke:#333,stroke-width:1px
+  style GEM fill:#D8BFD8,stroke:#333,stroke-width:1px
+  style CL fill:#FFB6C1,stroke:#333,stroke-width:1px
+
+
+```
+
+
+# 7. Backend Flow
 ### Working of Authorization
 ```mermaid
 sequenceDiagram
@@ -352,7 +465,7 @@ sequenceDiagram
     Handler ->> Client: Return response (DSA solution)
     Client ->> User: Display response
 ```
-## 🧩 FrontEnd
+# 8. FrontEnd
 
 As someone opens the site he/she is redirected to signup page, if not authorized. The user can choose to either signup or login.
 
