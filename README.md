@@ -174,6 +174,9 @@ duration:          { type: Number, required: true }
 { timestamps: true }
 ```
 
+
+## 🧩 Backend Flow
+### Working of Authorization
 ```mermaid
 sequenceDiagram
   actor User
@@ -206,3 +209,103 @@ sequenceDiagram
   Client ->> userMiddleware: Verify JWT
   userMiddleware ->> MongoDB: Delete user/submissions
   userMiddleware ->> Client: Return success
+```
+
+### Working of Problem Creation/Updation/Deletion/Viewing
+```mermaid
+sequenceDiagram
+    actor User
+    participant Client
+    participant isAdminMiddleware as AdminMW
+    participant userMiddleware as UserMW
+    participant Handler
+    participant MongoDB as DB
+
+    User ->> Client: POST /problem/create
+    Client ->> AdminMW: Verify admin role
+    AdminMW ->> DB: Create new problem (title, description, etc.)
+    AdminMW ->> Client: Return success/failure
+
+    User ->> Client: PUT /problem/update/:id
+    Client ->> AdminMW: Verify admin role
+    AdminMW ->> DB: Update problem by ID
+    AdminMW ->> Client: Return success/failure
+
+    User ->> Client: DELETE /problem/delete/:id
+    Client ->> AdminMW: Verify admin role
+    AdminMW ->> DB: Delete problem by ID
+    AdminMW ->> Client: Return success/failure
+
+    User ->> Client: GET /problem/getAllProblem
+    Client ->> UserMW: Verify user
+    UserMW ->> DB: Fetch all problems
+    UserMW ->> Client: Return problem list
+
+    User ->> Client: GET /problem/problemById/:id
+    Client ->> UserMW: Verify user
+    UserMW ->> DB: Fetch problem by ID
+    UserMW ->> Client: Return problem data
+
+    User ->> Client: GET /problem/problemSolvedByUser
+    Client ->> UserMW: Verify user
+    UserMW ->> DB: Fetch solved problems by user
+    UserMW ->> Client: Return solved list
+
+    User ->> Client: GET /problem/submittedProblem/:pid
+    Client ->> UserMW: Verify user
+    UserMW ->> DB: Fetch submissions for problem by user
+    UserMW ->> Client: Return submission data
+```
+
+### Working of Submission
+```mermaid
+sequenceDiagram
+    actor User
+    participant Client
+    participant userMiddleware as UserMW
+    participant submitCodeRateLimiter as RateLimit
+    participant Handler
+    participant Judge0_API as JudgeAPI
+    participant MongoDB as DB
+
+    %% Submit Code Flow
+    User ->> Client: POST /submission/submit/:id
+    Client ->> UserMW: Verify JWT token
+    UserMW ->> RateLimit: Check submission rate
+    RateLimit ->> Handler: Pass if within limit
+    Handler ->> JudgeAPI: Submit code for evaluation
+    JudgeAPI ->> Handler: Return status, runtime, memory
+    Handler ->> DB: Save submission details
+    Handler ->> Client: Return result (status, error)
+
+    %% Run Code Flow
+    User ->> Client: POST /submission/run/:id
+    Client ->> UserMW: Verify JWT token
+    UserMW ->> RateLimit: Check submission rate
+    RateLimit ->> Handler: Pass if within limit
+    Handler ->> JudgeAPI: Run code
+    JudgeAPI ->> Handler: Return output or error
+    Handler ->> Client: Return result (output, error)
+```
+### Working of AI Chatbot
+```mermaid
+sequenceDiagram
+    actor User
+    participant Client
+    participant userMiddleware as UserMW
+    participant Handler
+    participant Gemini_API as GeminiAPI
+    participant MongoDB as DB
+
+    User ->> Client: POST /ai/chat (with chat data)
+    Client ->> UserMW: Verify JWT token
+    UserMW ->> DB: Check user existence
+    UserMW ->> Client: Pass if valid, reject if invalid
+    Client ->> Handler: Forward request
+    Handler ->> GeminiAPI: Send chat data (role/parts)
+    GeminiAPI ->> Handler: Return DSA response
+    Handler ->> Client: Return response (DSA solution)
+    Client ->> User: Display response
+```
+
+
