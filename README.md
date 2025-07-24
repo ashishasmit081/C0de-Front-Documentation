@@ -288,49 +288,9 @@ duration:          { type: Number, required: true }
     - Receive AI-based help.
     - Access future features like **video streaming** for solutions.
 
-
-```mermaid
-flowchart LR
-  subgraph Frontend
-    FE[React Frontend]
-  end
-
-  subgraph Backend
-    BE[Node.js/Express Backend]
-  end
-
-  subgraph Services
-    DB[MongoDB]
-    J0[Judge0 API]
-    GEM[Gemini API]
-    CL[Cloudinary]
-  end
-
-  %% Relationships
-  FE -->|HTTP/REST Requests| BE
-  BE -->|Data Storage/Retrieval| DB
-  BE -->|Code Execution| J0
-  BE -->|AI Chat Responses| GEM
-  BE -->|Video Uploads (Future)| CL
-
-  %% Notes
-  click FE callback "Includes Monaco Editor, Redux state,\nand responsive UI with Tailwind CSS"
-  click BE callback "Handles routes, middleware (JWT, rate limiting),\nand API integrations"
-  click DB callback "Stores User, Problem, Submission,\nand VideoSolution schemas"
-  click J0 callback "Compiles and runs code with test cases"
-  click GEM callback "Provides DSA-specific chatbot support"
-  click CL callback "Future storage for video solutions"
-
-  %% Styling
-  style FE fill:#ADD8E6,stroke:#333,stroke-width:1px
-  style BE fill:#90EE90,stroke:#333,stroke-width:1px
-  style DB fill:#FFFFE0,stroke:#333,stroke-width:1px
-  style J0 fill:#FFD580,stroke:#333,stroke-width:1px
-  style GEM fill:#D8BFD8,stroke:#333,stroke-width:1px
-  style CL fill:#FFB6C1,stroke:#333,stroke-width:1px
+  <img src="images/hld.png" alt="HLD" width="100%" />
 
 
-```
 
 
 # 7. Backend Flow
