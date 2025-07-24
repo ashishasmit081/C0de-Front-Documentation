@@ -173,7 +173,52 @@ duration:          { type: Number, required: true }
 ```js
 { timestamps: true }
 ```
+---
+## 🚀 Features
 
+### 🔐 Authentication & Authorization
+- Secure **user authentication** using **JWT** tokens and **bcrypt** password hashing.
+- **Role-based access control** (`admin`, `user`) implemented via custom middleware.
+- **Token blacklisting** using **Redis** ensures secure logout and session handling.
+
+### 👤 User Functionality
+- **Signup/Login** system with JWT authentication.
+- Users can:
+  - **View all coding problems** or filter only their **solved problems**.
+  - **Run** or **Submit** code for any problem in **Java, C++, or JavaScript**.
+  - **Delete their profile**, which also removes all related submissions.
+
+### 🧑‍💼 Admin Functionality
+- Full problem management capabilities:
+  - **Create**, **update**, and **delete** coding problems.
+  - Add **problem metadata**: title, description, difficulty level (`easy`, `medium`, `hard`), and topic tags (`array`, `graph`, etc.).
+  - Add both **visible and hidden test cases**.
+  - Provide **boilerplate code** and **reference solutions** for each supported language.
+
+### 🧪 Code Execution & Evaluation
+- **Judge0 API integration** to compile and run user code.
+- **Run mode**: Executes code without saving submission.
+- **Submit mode**: Executes code against all test cases and saves the result in the database.
+- All user code input is **sanitized** to avoid execution errors.
+
+### 🧠 AI-Powered Chatbot (via Gemini API)
+- Integrated an **AI assistant** to help users with **DSA-related doubts**.
+- Enhancements for contextual and safe interactions:
+  - **Max output token limit** of 500 to manage resource usage.
+  - **System Instructions** restrict responses strictly to coding/problem-solving topics.
+  - Automatically passes the **current problem’s title, description, test cases, and boilerplate** as context.
+  - Enables users to ask vague queries like _“help me with this problem”_ and receive accurate, relevant help.
+
+### 🗃️ Database Design
+- **Three core Mongoose schemas**:
+  - `User`: Includes role, problem history, and secure fields.
+  - `Problem`: Fully structured problem model with test cases, tags, and more.
+  - `Submission`: Stores every code submission, its result, runtime, and metadata.
+- **Compound indexing** on `(userId, problemId)` in the `Submission` schema for efficient querying.
+
+### 🔮 Future Enhancements
+- **Video solution support** via **video streaming integration** is planned in the next phase.
+---
 
 ## 🧩 Backend Flow
 ### Working of Authorization
@@ -307,5 +352,57 @@ sequenceDiagram
     Handler ->> Client: Return response (DSA solution)
     Client ->> User: Display response
 ```
+## 🧩 FrontEnd
+As someone opens the site he/she is redirected to signup page, if not authorized. The user can choose to either signup or login.
+<p align="center">
+  <img src="images/signup.png" alt="Signup Page" width="45%" />
+  <img src="images/login.png" alt="Login Page" width="45%" />
+</p>
 
+After signup/login user lands on homepage. On homepage user can see the problems, his/her progress, filter such as Diffculty, Topic, All/Solved problems to filter questions.
+<p align="center">
+  <img src="images/homepage_dark.png" alt="Signup Page" width="45%" />
+  <img src="images/homepage_light_filters.png" alt="Login Page" width="45%" />
+</p>
+
+If the user is an admin he/she can Create/Update/Delete problems
+<img src="images/admin_panel.png" alt="Admin Page" width="65%" />
+Admin can create a problem by filling details of 'title', 'description', 'difficulty', 'problem tag', 'visible test-cases', 'hidden test-cases', 'bolierplate code and reference solution for C++, Java & Javascript'.
+<img src="images/admin_create.png" alt="Admin Create Page" width="65%" />
+Admin can update a particular problem.
+<img src="images/admin_update_1.png" alt="Admin Update Page" width="65%" />
+Admin can update a problem or it's details. The details will be fetched from database via backend which admin can update.
+<p align="center">
+<img src="images/admin_update_2.1.png" alt="Admin Update Form1 Page" width="45%" />
+<img src="images/admin_update_2.2.png" alt="Admin Update Form2 Page" width="45%" />
+</p>
+Admin can delete a particular problem.
+<img src="images/admin_delete.png" alt="Admin Delete Page" width="65%" />
+---
+Apart from this any user (normal or admin) can attempt any question. After clicking on any question from homepage, user will be directed to problem page.
+The page contains Description, Editorial, Submissions, Solutions, AI Chatbot on left panel and Code editor on Right Panel. 
+Description section:
+<p align="center">
+<img src="images/user_problem_description_light.png" alt="Problem Page" width="45%" />
+<img src="images/user_problem_description_dark.png" alt="Problem Page" width="45%" />
+</p>
+---
+Solutions section:
+<img src="images/user_problem_solutions.png" alt="Problem Page" width="65%" />
+---
+Submissions section:
+<p align="center">
+<img src="images/user_problem_submissions.png" alt="Problem Page" width="45%" />
+<img src="images/user_problem_submissions2.png" alt="Problem Page" width="45%" />
+</p>
+---
+AI Chatbot section:
+<p align="center">
+<img src="images/user_problem_ai_dark.png" alt="Problem Page" width="45%" />
+<img src="images/user_problem_ai_light.png" alt="Problem Page" width="45%" />
+</p>
+---
+After submitting the code:
+<img src="images/user_problem_submit.png" alt="Problem Page" width="65%" />
+---
 
