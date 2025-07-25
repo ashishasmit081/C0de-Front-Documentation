@@ -353,7 +353,7 @@ sequenceDiagram
 
     User ->> Client: GET /problem/problemById/:id
     Client ->> UserMW: Verify user
-    UserMW ->> DB: Fetch problem by ID
+    UserMW ->> DB: Fetch problem by ID, (and editorial if present)
     UserMW ->> Client: Return problem data
 
     User ->> Client: GET /problem/problemSolvedByUser
