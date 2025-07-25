@@ -80,6 +80,12 @@ The goal was to build a coding platform similar to LeetCode where users can:
   - **System Instructions** restrict responses strictly to coding/problem-solving topics.
   - Automatically passes the **current problem’s title, description, test cases, and boilerplate** as context.
   - Enables users to ask vague queries like _“help me with this problem”_ and receive accurate, relevant help.
+ 
+### 📹 Video Integration (Cloudinary)
+-Secured video uploads with API signature authentication, handling form data (signature, timestamp, public ID, API key).
+-Saved and managed video metadata (problem ID, user ID, Cloudinary public ID, secure URL, duration, thumbnail) in MongoDB with duplicate checks.
+-Integrated uploaded videos into problem editorials, displaying metadata (thumbnails, durations) for enhanced user learning.
+-Designed deletion workflow to remove videos from Cloudinary and MongoDB with user authentication and error handling.
 
 ### 🗃️ Database Design
 - **Three core Mongoose schemas**:
