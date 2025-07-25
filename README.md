@@ -418,6 +418,39 @@ sequenceDiagram
     Client ->> User: Display response
 ```
 
+### Working of Video Upload/ Delete
+```mermaid
+sequenceDiagram
+    actor Frontend
+    participant Backend
+    participant Cloudinary
+    participant Database
+
+    Frontend->>Backend: GET /create/:problemId\n(generateUploadSignature)
+    Backend-->>Frontend: Upload Signature\n(timestamp, signature, apiKey, publicId)
+
+    Frontend->>Cloudinary: Upload Video\n(formData: file, signature, timestamp, publicId, apiKey)
+    Cloudinary-->>Frontend: Upload Response\n(secureUrl, cloudinaryPublicId, etc.)
+
+    Frontend->>Backend: POST /save\n(problemId, cloudinaryPublicId, secureUrl, duration)
+    Backend->>Cloudinary: api.resource(cloudinaryPublicId)
+    Cloudinary-->>Backend: Resource Details
+
+    Backend->>Database: FindOne({problemId, userId, cloudinaryPublicId})
+    Database-->>Backend: existingVideo (null if not found)
+
+    alt existingVideo exists
+        Backend-->>Frontend: 409 Conflict\n(Video already exists)
+    else
+        Backend->>Cloudinary: url(cloudinaryPublicId, thumbnail transformation)
+        Cloudinary-->>Backend: thumbnailUrl
+
+        Backend->>Database: Create SolutionVideo\n(problemId, userId, cloudinaryPublicId, secureUrl, duration, thumbnailUrl)
+        Database-->>Backend: Saved Video Document
+        Backend-->>Frontend: 201 Created\n(message, videoSolution)
+    end
+```
+
 ---
 
 # 8. FrontEnd
