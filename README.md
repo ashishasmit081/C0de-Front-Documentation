@@ -471,42 +471,54 @@ As someone opens the site he/she is redirected to signup page, if not authorized
 
 ---
 
-After signup/login user lands on homepage. On homepage user can see the problems, his/her progress, filter such as Diffculty, Topic, All/Solved problems to filter questions.
-Left image shows homepage in dark mode, right image shows homepage with filters applied (tag: DP, difficulty: hard)
+After signup/login user lands on homepage. The Explore Problem leads to Problem Page.
+<p align="center">
+  <img src="images/homedark.png" alt="Signup Page" width="45%" />
+  <img src="images/homelight.png" alt="Login Page" width="45%" />
+</p>
+
+On Problem Page user can see the problems, his/her progress, filter such as Diffculty, Topic, All/Solved problems to filter questions.
+Left image shows homepage in dark mode, right image shows homepage with filters applied (tag: Graph, difficulty: medium)
 
 <p align="center">
-  <img src="images/homepage_dark.png" alt="Signup Page" width="45%" />
-  <img src="images/homepage_light_filters.png" alt="Login Page" width="45%" />
+  <img src="images/problempagedark.png" alt="Problem Page" width="45%" />
+  <img src="images/problempagelightfilter.png" alt="Problem Page" width="45%" />
 </p>
 
 ---
 
 If the user is an admin he/she can Create/Update/Delete problems
 
-<img src="images/admin_panel.png" alt="Admin Page" width="65%" />
+<img src="images/admin.png" alt="Admin Page" width="65%" />
 
 Admin can create a problem by filling details of 'title', 'description', 'difficulty', 'problem tag', 'visible test-cases', 'hidden test-cases', 'bolierplate code and reference solution for C++, Java & Javascript'.
 
-<img src="images/admin_create.png" alt="Admin Create Page" width="65%" />
+<p align="center">
+  <img src="images/admincreatedark.png" alt="Problem Page" width="45%" />
+  <img src="images/admincreatelight.png" alt="Problem Page" width="45%" />
+</p>
 
 ---
 
 Admin can update a particular problem.
 
-<img src="images/admin_update_1.png" alt="Admin Update Page" width="65%" />
+<img src="images/problemupdatelist.png" alt="Admin Update Page" width="65%" />
 
 Admin can update a problem or it's details. The details will be fetched from database via backend which admin can update.
 
-<p align="center">
-<img src="images/admin_update_2.1.png" alt="Admin Update Form1 Page" width="45%" />
-<img src="images/admin_update_2.2.png" alt="Admin Update Form2 Page" width="45%" />
-</p>
+<img src="images/problemupdateform.png" alt="Admin Update Page" width="65%" />
 
 ---
 
 Admin can delete a particular problem.
 
-<img src="images/admin_delete.png" alt="Admin Delete Page" width="65%" />
+<img src="images/problemdeletelist.png" alt="Admin Delete Page" width="65%" />
+
+---
+
+Admin can uplod/delete video for any problem.
+
+<img src="images/videoupdateanddelete.png" alt="Admin Delete Page" width="65%" />
 
 ---
 
@@ -516,44 +528,57 @@ The page contains Description, Editorial, Submissions, Solutions, AI Chatbot on 
 Description section:
 
 <p align="center">
-<img src="images/user_problem_description_light.png" alt="Problem Page" width="45%" />
-<img src="images/user_problem_description_dark.png" alt="Problem Page" width="45%" />
+<img src="images/questionpagedescription.png" alt="Problem Page" width="45%" />
+<img src="images/questionpagedescriptionlight.png" alt="Problem Page" width="45%" />
 </p>
+
+---
+
+Editorial TV section:
+
+<img src="images/questionpageeditorial.png" alt="Problem Page" width="65%" />
 
 ---
 
 Solutions section:
 
-<img src="images/user_problem_solutions.png" alt="Problem Page" width="65%" />
+<img src="images/questionpagesolutions.png" alt="Problem Page" width="65%" />
 
 ---
 
 Submissions section:
 
 <p align="center">
-<img src="images/user_problem_submissions.png" alt="Problem Page" width="45%" />
-<img src="images/user_problem_submissions2.png" alt="Problem Page" width="45%" />
+<img src="images/questionpagesubmissions.png" alt="Problem Page" width="45%" />
+<img src="images/questionpagesubmissioncode.png" alt="Problem Page" width="45%" />
 </p>
 
 ---
 
 AI Chatbot section (the bold text and code are formatted using ReactMarkDown):
 
-<p align="center">
-<img src="images/user_problem_ai_dark.png" alt="Problem Page" width="45%" />
-<img src="images/user_problem_ai_light.png" alt="Problem Page" width="45%" />
-</p>
+<img src="images/questionpageai.png" alt="AI Page" width="65%" />
 
 ---
 
 After submitting the code:
 
-<img src="images/user_problem_submit.png" alt="Problem Page" width="65%" />
+<img src="images/questionpagejudge0.png" alt="Problem Page" width="65%" />
 
 ---
+
+User Profile section:
+
+<p align="center">
+<img src="images/profilepage.png" alt="Profile Page" width="45%" />
+<img src="images/profilepagelight.png" alt="Profile Page" width="45%" />
+</p>
+
+---
+
 # 9. Conclusion
 
-C0de Front is a feature-rich, scalable, and extensible LeetCode-style coding platform designed from the ground up with real-world software engineering practices. By integrating AI support, secure authentication, live code execution, and multimedia editorial features, the platform offers an end-to-end experience for both learners and administrators.
+C0de Front is a feature-rich, scalable, and extensible LeetCode-style coding platform designed from the ground up with real-world software engineering practices. By integrating AI support, Video Upload feature, secure authentication, live code execution, and multimedia editorial features, the platform offers an end-to-end experience for both learners and administrators.
 
 This project not only demonstrates technical depth across the MERN stack and integration with external APIs (Judge0, Gemini, Cloudinary), but also showcases strong skills in system design, security, performance optimization, and developer tooling.
 
@@ -561,4 +586,4 @@ While future enhancements such as video streaming, Docker-based containerization
 
 ---
 
-THIS WRAPS UP IT ALL. I am curently working on adding video feature via cloudinary using streaming method
+THIS WRAPS UP IT ALL. Currently deployed on AWS.
