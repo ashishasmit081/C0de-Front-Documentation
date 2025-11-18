@@ -8,9 +8,11 @@
 4. [Requirements & Setup](#4-requirements--setup)
 5. [Mongoose Schema Definitions for C0de Front](#5-mongoose-schema-definitions-for-c0de-front)
 6. [High Level Architecture](#6-high-level-architecture)
-7. [Backend Flow](#7-backend-flow)
-8. [FrontEnd](#8-frontend)
-9. [Conclusion](#9-conclusion)
+7. [API Endpoints](#7-api-endpoints)
+8. [Backend Flow](#8-backend-flow)
+9. [FrontEnd](#9-frontend)
+10. [Conclusion](#10-conclusion)
+
 
 ---
 
@@ -292,7 +294,39 @@ duration:          { type: Number, required: true }
 
 ---
 
-# 7. Backend Flow
+# 7. API Endpoints
+## AUTH ROUTER (6 endpoints)
+- **POST** `/register`
+- **POST** `/login`
+- **POST** `/logout`
+- **POST** `/admin/register`
+- **DELETE** `/deleteprofile`
+- **GET** `/check`
+
+## VIDEO ROUTER (3 endpoints)
+- **GET** `/create/:problemId`
+- **POST** `/save`
+- **DELETE** `/delete/:problemId`
+
+## SUBMISSION ROUTER (2 endpoints)
+- **POST** `/submit/:id`
+- **POST** `/run/:id`
+
+## PROBLEM ROUTER (7 endpoints)
+- **POST** `/create`
+- **PUT** `/update/:id`
+- **DELETE** `/delete/:id`
+- **GET** `/getAllProblem`
+- **GET** `/problemById/:id`
+- **GET** `/problemSolvedByUser`
+- **GET** `/submittedProblem/:pid`
+
+## AI ROUTER (1 endpoint)
+- **POST** `/chat`
+
+---
+
+# 8. Backend Flow
 ### Working of Authorization
 ```mermaid
 sequenceDiagram
@@ -460,7 +494,7 @@ sequenceDiagram
 
 ---
 
-# 8. FrontEnd
+# 9. FrontEnd
 
 As someone opens the site he/she is redirected to signup page, if not authorized. The user can choose to either signup or login.
 
@@ -576,7 +610,7 @@ User Profile section:
 
 ---
 
-# 9. Conclusion
+# 10. Conclusion
 
 C0de Front is a feature-rich, scalable, and extensible LeetCode-style coding platform designed from the ground up with real-world software engineering practices. By integrating AI support, Video Upload feature, secure authentication, live code execution, and multimedia editorial features, the platform offers an end-to-end experience for both learners and administrators.
 
